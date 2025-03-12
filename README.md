@@ -10,6 +10,7 @@ Visit https://findash-git-main-jitani04s-projects.vercel.app/ and use 'user@next
 - **Next.js**
 - **React**
 - **Tailwind CSS**
+- **TypeScript**
 - **Heroicons**
 - **PostgreSQL**
 - **bcryptjs**
