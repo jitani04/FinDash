@@ -11,6 +11,7 @@ import { Button } from '@/app/ui/button';
 import { useActionState } from 'react';
 import { authenticate } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
+import SupabaseAuthButtons from '../components/supabase-auth';
  
 export default function LoginForm() {
   const searchParams = useSearchParams();
@@ -83,6 +84,8 @@ export default function LoginForm() {
             </>
           )}
         </div>
+        {/* Supabase OAuth buttons (requires NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY) */}
+        <SupabaseAuthButtons />
       </div>
     </form>
   );
