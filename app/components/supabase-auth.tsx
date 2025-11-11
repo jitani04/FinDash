@@ -25,21 +25,12 @@ function IconMicrosoft() {
   );
 }
 
-function IconApple() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
-      <path fill="currentColor" d="M16.365 1.43c-.8.02-2.08.56-2.74 1.24-.6.61-1.13 1.58-1.02 2.5 1.08.04 2.29-.7 2.95-1.37.68-.7 1.17-1.49 0-2.37zM12 4.5c-2-2.06-5.28-2.05-7.27-.3-1.55 1.26-2.58 3.9-1.8 6.2.95 2.89 3.45 5.36 6.46 5.36.44 0 .89-.06 1.33-.18 1.05-.29 2.11-.29 3.15 0 .44.12.89.18 1.33.18 3.02 0 5.52-2.47 6.47-5.36.77-2.3-.25-4.94-1.8-6.2C17.28 2.44 14 2.44 12 4.5z"/>
-    </svg>
-  );
-}
-
 export default function SupabaseAuth(): React.ReactElement {
-  async function handleOAuth(provider: "google" | "microsoft" | "apple") {
+  async function handleOAuth(provider: "google" | "microsoft") {
     try {
-      const providerMap: Record<"google" | "microsoft" | "apple", Provider> = {
+      const providerMap: Record<"google" | "microsoft", Provider> = {
         google: "google",
         microsoft: "azure",
-        apple: "apple",
       };
       const supabaseProvider = providerMap[provider];
       await supabase.auth.signInWithOAuth({ provider: supabaseProvider });
@@ -86,16 +77,6 @@ export default function SupabaseAuth(): React.ReactElement {
       >
         <IconMicrosoft />
         <span style={{ flex: 1, textAlign: "center" }}>Continue with Microsoft</span>
-      </button>
-
-      <button
-        type="button"
-        onClick={() => handleOAuth("apple")}
-        style={buttonStyle}
-        aria-label="Sign in with Apple"
-      >
-        <IconApple />
-        <span style={{ flex: 1, textAlign: "center" }}>Continue with Apple</span>
       </button>
     </div>
   );
