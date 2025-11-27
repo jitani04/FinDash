@@ -1,12 +1,13 @@
+export const runtime = "nodejs";
+
 import NextAuth from "next-auth";
+import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { authConfig } from "./auth.config";
 import { z } from "zod";
 import type { User } from "@/app/lib/definitions";
 import bcrypt from "bcryptjs";
 import postgres from "postgres";
-import Google from "next-auth/providers/google";
-
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
@@ -54,8 +55,5 @@ const authOptions = {
   ],
 };
 
-// ⭐ IMPORTANT — this returns handlers, auth(), signIn(), signOut(), etc.
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
-
-// ⭐ MUST also default export to satisfy Next.js App Router
 export default NextAuth(authOptions);
