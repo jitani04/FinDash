@@ -4,28 +4,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import postgres from 'postgres';
-import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
  
-export async function authenticate(
-    prevState: string | undefined,
-    formData: FormData,
-  ) {
-    try {
-      await signIn('credentials', formData);
-    } catch (error) {
-      if (error instanceof AuthError) {
-        switch (error.type) {
-          case 'CredentialsSignin':
-            return 'Invalid credentials.';
-          default:
-            return 'Something went wrong.';
-        }
-      }
-      throw error;
-    }
-  }
-  
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 const FormSchema = z.object({
   id: z.string(),
@@ -90,3 +69,40 @@ export async function deleteInvoice(id: string) {
     await sql`DELETE FROM invoices WHERE id = ${id}`;
     revalidatePath('/dashboard/invoices');
   }
+
+export async function authenticate(formData: FormData) {
+  const email = formData.get('email')?.toString() || '';
+  const password = formData.get('password')?.toString() || '';
+  const redirectTo = formData.get('redirectTo')?.toString() || '/';
+  const action = (formData.get('action')?.toString() || 'signin') as 'signin' | 'signup' | 'oauth';
+
+  if (!email || !password) {
+    throw new Error('Missing email or password');
+  }
+
+  // build absolute base URL for server-side fetch:
+  const base =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+    process.env.NEXTAUTH_URL ||
+    `http://localhost:${process.env.PORT ?? 3000}`;
+
+  const endpoint = action === 'signup' ? '/api/auth/signup' : '/api/auth/signin';
+  const url = new URL(endpoint, base).toString();
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, email, password }),
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    const payload = await res.json().catch(() => ({}));
+    const msg = payload?.error ?? 'Authentication failed';
+    throw new Error(msg);
+  }
+
+  // on success redirect to the provided location
+  redirect(redirectTo);
+}
