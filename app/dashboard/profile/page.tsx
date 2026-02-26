@@ -98,65 +98,7 @@ export default async function ProfilePage() {
           </div>
         </div>
 
-        {/* PREFERENCES */}
-        <div className="space-y-4">
-          <div className="rounded-2xl border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur">
-            <h4 className="text-sm font-semibold text-slate-900">
-              Notifications
-            </h4>
-            <div className="mt-3 space-y-3 text-sm text-slate-700">
-              <label className="flex items-center justify-between gap-3">
-                <span>Send me payment reminders</span>
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="h-4 w-4 accent-blue-600"
-                />
-              </label>
-              <label className="flex items-center justify-between gap-3">
-                <span>Weekly performance recap</span>
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="h-4 w-4 accent-blue-600"
-                />
-              </label>
-              <label className="flex items-center justify-between gap-3">
-                <span>Product updates</span>
-                <input type="checkbox" className="h-4 w-4 accent-blue-600" />
-              </label>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur">
-            <h4 className="text-sm font-semibold text-slate-900">
-              Security shortcuts
-            </h4>
-            <p className="mt-2 text-sm text-slate-700">
-              Manage active sessions, reset your password, or export your data.
-            </p>
-            <div className="mt-3 space-y-2 text-sm">
-              <button
-                type="button"
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-left font-semibold text-slate-800 transition hover:border-blue-500 hover:text-blue-700"
-              >
-                Review active sessions
-              </button>
-              <button
-                type="button"
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-left font-semibold text-slate-800 transition hover:border-blue-500 hover:text-blue-700"
-              >
-                Reset password
-              </button>
-              <button
-                type="button"
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-left font-semibold text-slate-800 transition hover:border-blue-500 hover:text-blue-700"
-              >
-                Export my data
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* PREFERENCES (temporarily disabled) */}
       </div>
     </div>
   );

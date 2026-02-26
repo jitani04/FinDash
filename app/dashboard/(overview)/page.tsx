@@ -13,9 +13,6 @@ export default async function Page() {
   return (
     <main className="space-y-8">
       <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">
-          Control Center
-        </p>
         <h1 className={`${lusitana.className} text-3xl md:text-4xl`}>
           Dashboard
         </h1>

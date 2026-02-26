@@ -167,6 +167,43 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
+export type InvoiceDetails = {
+  id: string;
+  customer_id: string;
+  customer_name: string;
+  customer_email: string;
+  amount: number;
+  status: 'pending' | 'paid';
+  date: string;
+};
+
+export async function fetchInvoiceDetails(id: string) {
+  try {
+    const data = await sql<
+      (InvoiceDetails & { amount_raw: number })[]
+    >`
+      SELECT
+        invoices.id,
+        invoices.customer_id,
+        invoices.amount AS amount_raw,
+        invoices.status,
+        invoices.date,
+        customers.name AS customer_name,
+        customers.email AS customer_email
+      FROM invoices
+      JOIN customers ON invoices.customer_id = customers.id
+      WHERE invoices.id = ${id}
+    `;
+    const row = data[0];
+    if (!row) return null;
+    const { amount_raw, ...rest } = row;
+    return { ...rest, amount: amount_raw / 100 } as InvoiceDetails;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice details.');
+  }
+}
+
 export async function fetchCustomers() {
   try {
     const customers = await sql<CustomerField[]>`
