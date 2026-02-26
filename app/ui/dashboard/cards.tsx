@@ -13,6 +13,25 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
+const toneMap = {
+  collected: {
+    gradient: 'bg-emerald-50 text-emerald-700 ring-emerald-100',
+    helper: 'Collected to date',
+  },
+  pending: {
+    gradient: 'bg-amber-50 text-amber-700 ring-amber-100',
+    helper: 'Awaiting payment',
+  },
+  invoices: {
+    gradient: 'bg-blue-50 text-blue-700 ring-blue-100',
+    helper: 'Invoices in system',
+  },
+  customers: {
+    gradient: 'bg-cyan-50 text-cyan-700 ring-cyan-100',
+    helper: 'Active accounts',
+  },
+};
+
 export default async function CardWrapper() {
   const {
     numberOfInvoices,
@@ -46,20 +65,30 @@ export function Card({
   type: 'invoices' | 'customers' | 'pending' | 'collected';
 }) {
   const Icon = iconMap[type];
+  const tone = toneMap[type];
 
   return (
-    <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
-      <div className="flex p-4">
-        {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
-        <h3 className="ml-2 text-sm font-medium">{title}</h3>
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex items-center gap-3">
+        {Icon ? (
+          <span
+            className={`flex h-11 w-11 items-center justify-center rounded-xl ring-1 ${tone?.gradient}`}
+          >
+            <Icon className="h-5 w-5" />
+          </span>
+        ) : null}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            {title}
+          </p>
+          <p
+            className={`${lusitana.className} text-2xl font-semibold leading-tight text-slate-900`}
+          >
+            {value}
+          </p>
+          <p className="text-sm text-slate-600">{tone?.helper}</p>
+        </div>
       </div>
-      <p
-        className={`${lusitana.className}
-          truncate rounded-xl bg-white px-4 py-8 text-center text-2xl`}
-      >
-        {value}
-      </p>
-      
     </div>
   );
 }

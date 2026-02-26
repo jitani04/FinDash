@@ -20,12 +20,20 @@ import { Suspense } from 'react';
 
   return (
     <div className="w-full">
-      <div className="flex w-full items-center justify-between">
-        <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>
-      </div>
-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Search invoices..." />
+      <div className="flex w-full flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">
+            Receivables
+          </p>
+          <h1 className={`${lusitana.className} text-3xl`}>Invoices</h1>
+          <p className="text-sm text-slate-600">
+            Search, filter, and create invoices with live payment status.
+          </p>
+        </div>
         <CreateInvoice />
+      </div>
+      <div className="mt-4 flex items-center justify-between gap-2 md:mt-6">
+        <Search placeholder="Search invoices..." />
       </div>
        <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />

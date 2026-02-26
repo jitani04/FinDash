@@ -14,70 +14,149 @@ export default async function ProfilePage() {
       .toUpperCase() ?? "U";
 
   return (
-    <div className="max-w-3xl mx-auto space-y-10">
+    <div className="mx-auto flex max-w-5xl flex-col gap-8">
       {/* HEADER */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
-        <p className="text-gray-600">Manage your account information</p>
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            {/* Avatar */}
+            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50 text-xl font-semibold text-slate-800">
+              {user?.image ? (
+                <Image
+                  src={user.image}
+                  alt="Profile image"
+                  width={64}
+                  height={64}
+                  className="h-16 w-16 object-cover"
+                />
+              ) : (
+                <span>{initials}</span>
+              )}
+            </div>
+            {/* User Info */}
+            <div>
+              <p className="text-sm uppercase tracking-[0.2em] text-blue-600">
+                My profile
+              </p>
+              <h1 className="text-3xl font-semibold leading-tight text-slate-900">
+                {user?.name ?? 'Unnamed User'}
+              </h1>
+              <p className="text-slate-600">
+                {user?.email ?? 'No email available'}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 text-sm text-slate-600">
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            Account status: Active
+          </div>
+        </div>
       </div>
 
-      {/* PROFILE CARD */}
-      <div className="rounded-lg border bg-white p-6 shadow-sm">
-        <div className="flex items-center gap-6">
-          {/* Avatar */}
-          <div className="h-20 w-20 overflow-hidden rounded-full border flex items-center justify-center bg-blue-600 text-white">
-            {user?.image ? (
-              <Image
-                src={user.image}
-                alt="Profile image"
-                width={80}
-                height={80}
-                className="h-20 w-20 object-cover"
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {/* ACCOUNT DETAILS */}
+        <div className="rounded-2xl border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur lg:col-span-2">
+          <h3 className="text-lg font-semibold text-gray-900">
+            Account details
+          </h3>
+          <p className="text-sm text-gray-600">
+            Keep your name up to date. Email is managed by your identity
+            provider.
+          </p>
+
+          <div className="mt-6 space-y-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <input
+                type="text"
+                defaultValue={user?.name ?? ''}
+                className="w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
-            ) : (
-              <span className="text-xl font-semibold">{initials}</span>
-            )}
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <input
+                type="email"
+                disabled
+                defaultValue={user?.email ?? ''}
+                className="w-full rounded-md border bg-gray-100 px-3 py-2 text-sm shadow-sm"
+              />
+              <p className="text-xs text-gray-500">Email cannot be changed.</p>
+            </div>
+
+            <button
+              type="button"
+              className="rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+            >
+              Update profile
+            </button>
+          </div>
+        </div>
+
+        {/* PREFERENCES */}
+        <div className="space-y-4">
+          <div className="rounded-2xl border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur">
+            <h4 className="text-sm font-semibold text-slate-900">
+              Notifications
+            </h4>
+            <div className="mt-3 space-y-3 text-sm text-slate-700">
+              <label className="flex items-center justify-between gap-3">
+                <span>Send me payment reminders</span>
+                <input
+                  type="checkbox"
+                  defaultChecked
+                  className="h-4 w-4 accent-blue-600"
+                />
+              </label>
+              <label className="flex items-center justify-between gap-3">
+                <span>Weekly performance recap</span>
+                <input
+                  type="checkbox"
+                  defaultChecked
+                  className="h-4 w-4 accent-blue-600"
+                />
+              </label>
+              <label className="flex items-center justify-between gap-3">
+                <span>Product updates</span>
+                <input type="checkbox" className="h-4 w-4 accent-blue-600" />
+              </label>
+            </div>
           </div>
 
-          {/* User Info */}
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">
-              {user?.name ?? "Unnamed User"}
-            </h2>
-            <p className="text-gray-600">{user?.email ?? "No email available"}</p>
+          <div className="rounded-2xl border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur">
+            <h4 className="text-sm font-semibold text-slate-900">
+              Security shortcuts
+            </h4>
+            <p className="mt-2 text-sm text-slate-700">
+              Manage active sessions, reset your password, or export your data.
+            </p>
+            <div className="mt-3 space-y-2 text-sm">
+              <button
+                type="button"
+                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-left font-semibold text-slate-800 transition hover:border-blue-500 hover:text-blue-700"
+              >
+                Review active sessions
+              </button>
+              <button
+                type="button"
+                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-left font-semibold text-slate-800 transition hover:border-blue-500 hover:text-blue-700"
+              >
+                Reset password
+              </button>
+              <button
+                type="button"
+                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-left font-semibold text-slate-800 transition hover:border-blue-500 hover:text-blue-700"
+              >
+                Export my data
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* ACCOUNT DETAILS */}
-      <div className="rounded-lg border bg-white p-6 shadow-sm space-y-6">
-        <h3 className="text-xl font-semibold text-gray-900">Account Details</h3>
-
-        {/* Name */}
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">Name</label>
-          <input
-            type="text"
-            defaultValue={user?.name ?? ""}
-            className="w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-
-        {/* Email */}
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            type="email"
-            disabled
-            defaultValue={user?.email ?? ""}
-            className="w-full rounded-md border bg-gray-100 px-3 py-2 text-sm shadow-sm"
-          />
-          <p className="text-xs text-gray-500">Email cannot be changed.</p>
-        </div>
-
-        <button className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
-          Update Profile
-        </button>
       </div>
     </div>
   );

@@ -6,16 +6,18 @@ import { signOut } from '@/auth';
 
 export default function Nav() {
   return (
-    <nav className="w-full bg-blue-500 text-white px-6 py-4 shadow-md">
-      <div className="flex items-center justify-between">
-        
-        {/* Left: Logo */}
+    <nav className="w-full border-b border-slate-200 bg-white/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
+        {/* Left: Logo + wordmark */}
         <div className="flex items-center gap-3">
-          <FinDashLogo />
+          <FinDashLogo className="text-slate-900" />
+          <div className="hidden text-sm font-medium text-slate-500 sm:block">
+            Clear, calm finance dashboards
+          </div>
         </div>
 
         {/* Middle: Nav Links */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden items-center gap-1 rounded-full bg-slate-100 px-2 py-1 md:flex">
           <NavLinks />
         </div>
 
@@ -26,12 +28,11 @@ export default function Nav() {
             await signOut({ redirectTo: '/' });
           }}
         >
-          <button className="flex items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20 transition">
+          <button className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-blue-500 hover:text-blue-700">
             <PowerIcon className="w-5" />
             <span className="hidden md:block">Sign Out</span>
           </button>
         </form>
-
       </div>
     </nav>
   );

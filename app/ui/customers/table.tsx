@@ -1,10 +1,5 @@
 import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
-import Search from '@/app/ui/search';
-import {
-  CustomersTableType,
-  FormattedCustomersTable,
-} from '@/app/lib/definitions';
+import { FormattedCustomersTable } from '@/app/lib/definitions';
 
 export default async function CustomersTable({
   customers,
@@ -13,19 +8,15 @@ export default async function CustomersTable({
 }) {
   return (
     <div className="w-full">
-      <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
-        Customers
-      </h1>
-      <Search placeholder="Search customers..." />
-      <div className="mt-6 flow-root">
+      <div className="flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
-            <div className="overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-sm md:pt-0">
               <div className="md:hidden">
                 {customers?.map((customer) => (
                   <div
                     key={customer.id}
-                    className="mb-2 w-full rounded-md bg-white p-4"
+                    className="mb-3 w-full rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm"
                   >
                     <div className="flex items-center justify-between border-b pb-4">
                       <div>
@@ -46,15 +37,32 @@ export default async function CustomersTable({
                         </p>
                       </div>
                     </div>
-                    <div className="flex w-full items-center justify-between border-b py-5">
-                      <div className="flex w-1/2 flex-col">
-                        <p className="text-xs">Pending</p>
-                        <p className="font-medium">{customer.total_pending}</p>
+                    <div className="flex w-full flex-wrap items-center justify-between gap-3 border-b py-4">
+                      <div className="flex flex-col">
+                        <p className="text-xs uppercase text-slate-500">
+                          Pending
+                        </p>
+                        <p className="font-semibold text-slate-900">
+                          {customer.total_pending}
+                        </p>
                       </div>
-                      <div className="flex w-1/2 flex-col">
-                        <p className="text-xs">Paid</p>
-                        <p className="font-medium">{customer.total_paid}</p>
+                      <div className="flex flex-col">
+                        <p className="text-xs uppercase text-slate-500">Paid</p>
+                        <p className="font-semibold text-slate-900">
+                          {customer.total_paid}
+                        </p>
                       </div>
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                          customer.total_pending !== '$0.00'
+                            ? 'bg-amber-100 text-amber-800'
+                            : 'bg-emerald-100 text-emerald-700'
+                        }`}
+                      >
+                        {customer.total_pending !== '$0.00'
+                          ? 'Follow up'
+                          : 'On track'}
+                      </span>
                     </div>
                     <div className="pt-4 text-sm">
                       <p>{customer.total_invoices} invoices</p>
@@ -63,7 +71,7 @@ export default async function CustomersTable({
                 ))}
               </div>
               <table className="hidden min-w-full rounded-md text-gray-900 md:table">
-                <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
+                <thead className="rounded-md bg-slate-50 text-left text-sm font-semibold text-slate-700">
                   <tr>
                     <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                       Name
@@ -108,7 +116,18 @@ export default async function CustomersTable({
                         {customer.total_pending}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
-                        {customer.total_paid}
+                        <div className="flex items-center gap-2">
+                          {customer.total_pending !== '$0.00' ? (
+                            <span className="rounded-full bg-amber-100 px-2 py-1 text-[11px] font-semibold text-amber-800">
+                              Follow up
+                            </span>
+                          ) : (
+                            <span className="rounded-full bg-emerald-100 px-2 py-1 text-[11px] font-semibold text-emerald-700">
+                              On track
+                            </span>
+                          )}
+                          <span>{customer.total_paid}</span>
+                        </div>
                       </td>
                     </tr>
                   ))}

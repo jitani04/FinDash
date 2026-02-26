@@ -2,42 +2,62 @@ import FinDashLogo from '@/app/ui/findash-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { lusitana } from './ui/fonts';
-import Image from 'next/image';
+import LandingAnimation from './ui/landing-animation';
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        <FinDashLogo/> 
-      </div>
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
-          <p className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}>
-            <strong>Welcome to FinDash.</strong> <br />
-            Track. Analyze. Grow.
-          </p>
+    <main className="relative min-h-screen bg-slate-50">
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-blue-50 via-white to-transparent" />
+      <div className="relative mx-auto flex max-w-6xl flex-col px-6 py-10 md:py-16">
+        <header className="flex items-center justify-between">
+          <FinDashLogo className="text-slate-900" />
           <Link
             href="/login"
-            className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+            className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-blue-500 hover:text-blue-700"
           >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+            Log in <ArrowRightIcon className="h-4 w-4" />
           </Link>
-        </div>
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          <Image
-            src="/hero.jpg"
-            width={612}
-            height={448}
-            className="hidden md:block"
-            alt="Screenshots of the dashboard project showing desktop version"
-          /> 
-          <Image
-            src="/hero-mobile.png"
-            width={560}
-            height={620}
-            className="block md:hidden"
-            alt="Screenshots of the dashboard project showing mobile version"
-          />
+        </header>
+
+        <div className="mt-12 grid grid-cols-1 items-center gap-10 md:grid-cols-2">
+          <div className="space-y-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-600">
+              Financial clarity
+            </p>
+            <h1
+              className={`${lusitana.className} text-4xl font-semibold leading-tight text-slate-900 md:text-5xl`}
+            >
+              Calm, minimal dashboards for revenue and customers.
+            </h1>
+            <p className="text-lg text-slate-600">
+              FinDash keeps your team aligned with the essentials—clean invoices,
+              real-time revenue, and customer health—without the visual noise.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/login"
+                className="flex items-center gap-3 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-500"
+              >
+                Sign in to workspace <ArrowRightIcon className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-800 transition hover:border-blue-500 hover:text-blue-700"
+              >
+                View sample dashboard
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-3 text-sm text-slate-600">
+              <span className="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-800">
+                Live data previews
+              </span>
+              <span className="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-800">
+                Minimal UI system
+              </span>
+            </div>
+          </div>
+
+          <LandingAnimation />
         </div>
       </div>
     </main>
